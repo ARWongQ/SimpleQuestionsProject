@@ -11,13 +11,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -108,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             //Returns the desired fragment
             switch (position){
                 case 0:
-                   Tab1Contacts tab1 = new Tab1Contacts();
+                   Tab1Practice tab1 = new Tab1Practice();
                    return tab1;
                 case 1:
                     Tab2Contacts tab2 = new Tab2Contacts();
@@ -128,18 +124,6 @@ public class MainActivity extends AppCompatActivity {
             return 3;
         }
 
-        @Override
-        public CharSequence getPageTitle(int position){
-            switch (position){
-                case 0:
-                    return "Section 1";
-                case 1:
-                    return "Section 2";
-                case 2:
-                    return "Section 3";
-                default:
-                    return null;
-            }
-        }
+
     }
 }
