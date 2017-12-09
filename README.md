@@ -1,1 +1,3 @@
-# SimpleQuestionsProject
+# SimpleQuestions
+Final Term project
+
