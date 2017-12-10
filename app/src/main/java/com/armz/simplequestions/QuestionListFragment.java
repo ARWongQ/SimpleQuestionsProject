@@ -16,6 +16,9 @@ import java.util.List;
 
 public class QuestionListFragment extends Fragment {
     private RecyclerView mQuestionRecyclerView;
+    private Question mQuestion;
+
+
 
 
 
