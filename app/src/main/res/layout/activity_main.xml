@@ -57,13 +57,25 @@
                 />
 
         </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Current Level Data"
-            android:textSize="15dp"
-            />
+            android:orientation="horizontal">
+            <ProgressBar
+                android:id="@+id/levelProgressBar"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                style="?android:attr/progressBarStyleHorizontal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Current Level Data"
+                android:textSize="15dp"
+                android:layout_marginStart="5dp"
+                />
+        </LinearLayout>
 
     </LinearLayout>
 
