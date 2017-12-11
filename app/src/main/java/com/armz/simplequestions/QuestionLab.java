@@ -20,7 +20,8 @@ public class QuestionLab {
         mQuestions = new ArrayList<Question>();
 
         for(int i= 0; i<20; i++){
-            Question newQ = new Question("Question","Answer",false,UUID.randomUUID());
+
+            Question newQ = new Question("Question","Answer",false, i);
             mQuestions.add(newQ);
         }
     }
@@ -37,9 +38,9 @@ public class QuestionLab {
         return mQuestions;
     }
 
-    public Question getQuestion(UUID id){
+    public Question getQuestion(int id){
         for(Question curQuestion: mQuestions){
-            if(curQuestion.getID().equals(id)){
+            if(curQuestion.getID() == id){
                 return curQuestion;
             }
         }
