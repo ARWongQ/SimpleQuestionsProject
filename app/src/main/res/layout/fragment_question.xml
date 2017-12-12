@@ -1,37 +1,100 @@
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="100dp" />
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/questionDisplay_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:text="DISPLAY"
+            android:textColor="@android:color/black"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/question_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="QUESTION"/>
-        <TextView
-            android:id="@+id/answer_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="ANSWER"/>
+            android:layout_margin="20dp"
+            android:text="QUESTION"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            />
 
-        <TextView
-            android:id="@+id/id_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="ID"/>
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+
+            >
+
+            <Button
+                android:id="@+id/button_One"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Option 1"/>
+
+            <Button
+                android:id="@+id/button_Two"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Option 2"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_Three"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Option 3"
+                 />
+
+            <Button
+                android:id="@+id/button_Four"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Option 4"
+                 />
+
+        </LinearLayout>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -1,5 +1,7 @@
 package com.armz.simplequestions;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -8,18 +10,38 @@ import java.util.UUID;
 
 public class Question {
     private UUID mID;
+    private String mQuestionDisplay;
     private String mQuestion;
     private String mAnswer;
     private Boolean mhasPassed;
+    private List<String> wrongAnswers = new ArrayList<String>();
 
 
 
     //Constructor
-    public Question(String mQuestion, String mAnswer, Boolean mhasPassed, UUID mID){
+    public Question(String mQuestion, String mAnswer, Boolean mhasPassed, UUID mID, int numb, List<String> optionalAnswers){
         this.mQuestion = mQuestion;
         this.mAnswer = mAnswer;
         this.mhasPassed = mhasPassed;
         this.mID = mID;
+        this.mQuestionDisplay = "Problem #" + numb;
+        this.wrongAnswers = optionalAnswers;
+    }
+
+    public List<String> getWrongAnswers() {
+        return wrongAnswers;
+    }
+
+    public void setWrongAnswers(List<String> wrongAnswers) {
+        this.wrongAnswers = wrongAnswers;
+    }
+
+    public String getQuestionDisplay() {
+        return mQuestionDisplay;
+    }
+
+    public void setQuestionDisplay(String questionDisplay) {
+        mQuestionDisplay = questionDisplay;
     }
 
     public UUID getID() {

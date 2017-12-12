@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,8 +50,9 @@ public class QuestionListFragment extends Fragment {
     //VIEW_HOLDER  (Detects presses)
     private class QuestionHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         //Parts of the widget
-        private TextView mAnswerTextView;
         private TextView mQuestionTextView;
+        private ImageView mSolvedImageView;
+
 
         private Question mQuestion;               //Crime to be displayed
 
@@ -59,16 +61,17 @@ public class QuestionListFragment extends Fragment {
             super(inflater.inflate(R.layout.list_item_question,parent,false));
             itemView.setOnClickListener(this);
 
-            mAnswerTextView = (TextView) itemView.findViewById(R.id.question_answer);
             mQuestionTextView = (TextView) itemView.findViewById(R.id.question_question);
+            mSolvedImageView = (ImageView) itemView.findViewById(R.id.question_solved);
+
 
         }
 
         //Called each time a new Crime should be displayed in CrimeHolder
         public void bind(Question question){
             mQuestion = question;
-            mAnswerTextView.setText(mQuestion.getAnswer());
-            mQuestionTextView.setText(mQuestion.getQuestion());
+            mQuestionTextView.setText(mQuestion.getQuestionDisplay());
+            //mSolvedImageView.setVisibility(mQuestion.getMhasPassed() ? View.VISIBLE : View.GONE);
         }
 
         @Override
