@@ -1,6 +1,18 @@
-<android.support.v7.widget.RecyclerView
+
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/question_recycler_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    />
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="120dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/question_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
+</LinearLayout>

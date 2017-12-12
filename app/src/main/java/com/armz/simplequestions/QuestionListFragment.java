@@ -1,5 +1,6 @@
 package com.armz.simplequestions;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -66,14 +67,15 @@ public class QuestionListFragment extends Fragment {
         //Called each time a new Crime should be displayed in CrimeHolder
         public void bind(Question question){
             mQuestion = question;
-            mAnswerTextView.setText(mQuestion.getQuestion());
-            mQuestionTextView.setText(mQuestion.getAnswer());
+            mAnswerTextView.setText(mQuestion.getAnswer());
+            mQuestionTextView.setText(mQuestion.getQuestion());
         }
 
         @Override
         public void onClick(View view){
             Toast.makeText(getActivity(),mQuestion.getID() + " clicked!", Toast.LENGTH_SHORT).show();
-
+            Intent intent = QuestionPagerActivity.newIntent(getActivity(), mQuestion.getID());
+            startActivity(intent);
         }
     }
 

@@ -17,6 +17,18 @@ public class QuestionFragment extends Fragment {
     private TextView mQuestionTextView;
     private TextView mAnswerTextView;
 
+    private static final String ARG_CRIME_ID = "question_id";
+
+
+    public static QuestionFragment newInstance(int crimeId) {
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_CRIME_ID, crimeId);
+
+        QuestionFragment fragment = new QuestionFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
