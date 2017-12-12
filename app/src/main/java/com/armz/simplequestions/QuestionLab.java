@@ -19,9 +19,10 @@ public class QuestionLab {
     private QuestionLab(Context context){
         mQuestions = new ArrayList<Question>();
 
-        for(int i= 0; i<20; i++){
+        for(int i= 0; i<2; i++){
 
-            Question newQ = new Question("Question","Answer",false, i);
+            String question = "Question " + i;
+            Question newQ = new Question(question,"Answer",false, UUID.randomUUID());
             mQuestions.add(newQ);
         }
     }
@@ -38,9 +39,9 @@ public class QuestionLab {
         return mQuestions;
     }
 
-    public Question getQuestion(int id){
+    public Question getQuestion(UUID id){
         for(Question curQuestion: mQuestions){
-            if(curQuestion.getID() == id){
+            if(curQuestion.getID().equals(id)){
                 return curQuestion;
             }
         }
