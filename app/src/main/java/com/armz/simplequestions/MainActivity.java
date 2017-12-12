@@ -106,17 +106,15 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                    Tab1Practice tab1 = new Tab1Practice();
                    return tab1;
+
                 case 1:
                     Tab2Contacts tab2 = new Tab2Contacts();
                     return tab2;
-                    //QuestionFragment tab2 = new QuestionFragment();
-                    //return tab2;
 
                 case 2:
-                    //Tab3Contacts tab3 = new Tab3Contacts();
-                    //return tab3;
                     QuestionListFragment tab3 = new QuestionListFragment();
                     return tab3;
+
                 default:
                     System.out.println("Tab not found");
                     return null;
