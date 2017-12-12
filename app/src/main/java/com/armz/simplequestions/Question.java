@@ -7,7 +7,7 @@ import java.util.UUID;
  */
 
 public class Question {
-    private int mID;
+    private UUID mID;
     private String mQuestion;
     private String mAnswer;
     private Boolean mhasPassed;
@@ -15,18 +15,18 @@ public class Question {
 
 
     //Constructor
-    public Question(String mQuestion, String mAnswer, Boolean mhasPassed, int mID){
+    public Question(String mQuestion, String mAnswer, Boolean mhasPassed, UUID mID){
         this.mQuestion = mQuestion;
         this.mAnswer = mAnswer;
         this.mhasPassed = mhasPassed;
         this.mID = mID;
     }
 
-    public int getID() {
+    public UUID getID() {
         return mID;
     }
 
-    public void setID(int ID) {
+    public void setID(UUID ID) {
         mID = ID;
     }
 
