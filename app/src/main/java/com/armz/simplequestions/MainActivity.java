@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                     return tab2;
 
                 case 2:
-                    QuestionListFragment tab3 = new QuestionListFragment();
+                    Tab3Contacts tab3 = new Tab3Contacts();
                     return tab3;
 
                 default:
