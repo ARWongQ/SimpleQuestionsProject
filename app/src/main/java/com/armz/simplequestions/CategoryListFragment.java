@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
+
 /**
  * Created by augustowong on 12/13/17.
  */
@@ -42,20 +52,59 @@ public class CategoryListFragment  extends Fragment {
 
     private void updateUI(){
 
-        List<Category> categories = new ArrayList<Category>();
+        // hold all categories read from Firebase
+        final List<Category> newCategories = new ArrayList<Category>();
+
+        mAdapter = new CategoryAdapter(newCategories);
+
+        // read Categories from Firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+
+        myRef.child("categories").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    Category category = new Category();
+                    category.setName(ds.getValue(Category.class).getName()); //set the name
+                    category.setHasPermission(ds.getValue(Category.class).getHasPermission());
+                    category.setCost(ds.getValue(Category.class).getCost());
+
+                    //display all the information
+                    Log.d(TAG, "showData: name: " + category.getName());
+                    Log.d(TAG, "showData: hasPermission: " + category.getHasPermission());
+                    Log.d(TAG, "showData: cost: " + category.getCost());
+
+                    // Add to list of categories
+                    newCategories.add(category);
+
+                    Log.d(TAG, "showData: size of category " + newCategories.size());
+                    Log.d(TAG, "showData: size of children " + dataSnapshot.getChildrenCount());
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+
+        System.out.println("Are we printing?? ------------ ");
         Category cur;
         String cat;
-        for(int i= 1; i < 4; i++){
-            cat = "Category #" + i;
-            cur = new Category(cat, i%2==0);
-            categories.add(cur);
-        }
+//        for(int i= 1; i < 4; i++){
+//            cat = "Category #" + i;
+//            cur = new Category(cat, i%2==0);
+//            categories.add(cur);
+//        }
 
-        cur = new Category("Blocked Category", false, 20);
-        categories.add(cur);
+//        cur = new Category("Blocked Category", false, 20);
+//        categories.add(cur);
 
 
-        mAdapter = new CategoryAdapter(categories);
+       // mAdapter = new CategoryAdapter(newCategories);
+
         mCategoryRecyclerView.setAdapter(mAdapter);
     }
 

@@ -23,6 +23,10 @@ public class Category {
         this.cost = cost;
     }
 
+    public Category() {
+
+    }
+
     public String getName() {
         return name;
     }
