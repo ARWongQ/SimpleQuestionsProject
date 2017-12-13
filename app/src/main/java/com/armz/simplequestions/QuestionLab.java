@@ -28,7 +28,7 @@ public class QuestionLab {
             options.add("Option 2");
             options.add("Option 3");
 
-            Question newQ = new Question(question,"Answer",false, UUID.randomUUID(), i+1, options);
+            Question newQ = new Question(i, question,"Answer","Answer2", "Answer3", "Answer4");
             mQuestions.add(newQ);
         }
     }
@@ -45,9 +45,9 @@ public class QuestionLab {
         return mQuestions;
     }
 
-    public Question getQuestion(UUID id){
+    public Question getQuestion(int id){
         for(Question curQuestion: mQuestions){
-            if(curQuestion.getID().equals(id)){
+            if(curQuestion.getmID() == id){
                 return curQuestion;
             }
         }

@@ -70,14 +70,14 @@ public class QuestionListFragment extends Fragment {
 
         public void bind(Question question){
             mQuestion = question;
-            mQuestionTextView.setText(mQuestion.getQuestionDisplay());
+            mQuestionTextView.setText("Hello");
             //mSolvedImageView.setVisibility(mQuestion.getMhasPassed() ? View.VISIBLE : View.GONE);
         }
 
         @Override
         public void onClick(View view){
-            Toast.makeText(getActivity(),mQuestion.getID() + " clicked!", Toast.LENGTH_SHORT).show();
-            Intent intent = QuestionPagerActivity.newIntent(getActivity(), mQuestion.getID());
+            Toast.makeText(getActivity(),mQuestion.getmID() + " clicked!", Toast.LENGTH_SHORT).show();
+            Intent intent = QuestionPagerActivity.newIntent(getActivity(), mQuestion.getmID());
             startActivity(intent);
         }
     }
