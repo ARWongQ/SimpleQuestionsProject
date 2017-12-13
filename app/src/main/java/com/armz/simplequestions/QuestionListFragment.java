@@ -40,9 +40,9 @@ public class QuestionListFragment extends Fragment {
     //sets up CrimeListFragment's UI
     private void updateUI(){
         QuestionLab questionLab = QuestionLab.get(getActivity());
-        List<Question> crimes = questionLab.getQuestions();
+        List<Question> questions = questionLab.getQuestions();
 
-        mAdapter = new QuestionAdapter(crimes);
+        mAdapter = new QuestionAdapter(questions);
         mQuestionRecyclerView.setAdapter(mAdapter);
     }
 
@@ -54,9 +54,9 @@ public class QuestionListFragment extends Fragment {
         private ImageView mSolvedImageView;
 
 
-        private Question mQuestion;               //Crime to be displayed
+        private Question mQuestion;
 
-        //Inflate the list_item_crime.xml constructor
+
         public QuestionHolder(LayoutInflater inflater, ViewGroup parent){
             super(inflater.inflate(R.layout.list_item_question,parent,false));
             itemView.setOnClickListener(this);
@@ -67,7 +67,7 @@ public class QuestionListFragment extends Fragment {
 
         }
 
-        //Called each time a new Crime should be displayed in CrimeHolder
+
         public void bind(Question question){
             mQuestion = question;
             mQuestionTextView.setText(mQuestion.getQuestionDisplay());
@@ -86,8 +86,8 @@ public class QuestionListFragment extends Fragment {
     private class QuestionAdapter extends RecyclerView.Adapter<QuestionHolder>{
         private List<Question> mQuestions;
 
-        public QuestionAdapter(List<Question> crimes){
-            mQuestions = crimes;
+        public QuestionAdapter(List<Question> questions){
+            mQuestions = questions;
         }
 
         //Called whenever there is a need of a new ViewHolder to display an item with
@@ -95,7 +95,7 @@ public class QuestionListFragment extends Fragment {
         public QuestionHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
 
-            //Create new CrimeHolder
+
             return new QuestionHolder(layoutInflater, parent);
         }
 
@@ -111,9 +111,5 @@ public class QuestionListFragment extends Fragment {
             return mQuestions.size();
         }
     }
-
-
-
-
 
 }
