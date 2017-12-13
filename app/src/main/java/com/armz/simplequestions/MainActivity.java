@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                     return tab3;
 
                 case 3:
-                    Tab1Practice tab4 = new Tab1Practice();
+                    StoreListFragment tab4 = new StoreListFragment();
                     return tab4;
 
                 default:
