@@ -7,12 +7,20 @@ package com.armz.simplequestions;
 public class Category {
     private String name;
     private Boolean hasPermission;
+    private int cost;
 
 
     //Constructor
     public Category(String name, Boolean hasPermission) {
         this.name = name;
         this.hasPermission = hasPermission;
+        this.cost = 0;
+    }
+
+    public Category(String name, Boolean hasPermission, int cost) {
+        this.name = name;
+        this.hasPermission = hasPermission;
+        this.cost = cost;
     }
 
     public String getName() {

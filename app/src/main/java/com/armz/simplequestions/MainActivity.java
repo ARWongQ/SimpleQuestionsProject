@@ -106,6 +106,10 @@ public class MainActivity extends AppCompatActivity {
                     RankingListFragment tab3 = new RankingListFragment();
                     return tab3;
 
+                case 3:
+                    Tab1Practice tab4 = new Tab1Practice();
+                    return tab4;
+
                 default:
                     System.out.println("Tab not found");
                     return null;
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
 

@@ -51,6 +51,8 @@ public class CategoryListFragment  extends Fragment {
             categories.add(cur);
         }
 
+        cur = new Category("Blocked Category", false, 20);
+        categories.add(cur);
 
 
         mAdapter = new CategoryAdapter(categories);
