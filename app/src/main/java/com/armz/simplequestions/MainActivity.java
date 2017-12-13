@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     return tab2;
 
                 case 2:
-                    Tab1Practice tab3 = new Tab1Practice();
+                    RankingListFragment tab3 = new RankingListFragment();
                     return tab3;
 
                 default:
