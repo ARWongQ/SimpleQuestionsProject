@@ -36,18 +36,17 @@ public class QuestionPagerActivity extends AppCompatActivity {
         UUID questionID = (UUID) getIntent()
                 .getSerializableExtra(EXTRA_QUESTION_ID);
 
-        System.out.println("MY QUESTION ID IS " + questionID);
-        System.out.println("PAGER \n");
-
         mViewPager = (ViewPager) findViewById(R.id.question_view_pager);
 
 
         mQuestions = QuestionLab.get(this).getQuestions();
         FragmentManager fragmentManager = getSupportFragmentManager();
+
         mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
 
             @Override
             public Fragment getItem(int position) {
+                System.out.println("GETTING NEW POSITION");
                 Question question = mQuestions.get(position);
                 return QuestionFragment.newInstance(question.getID());
 
@@ -58,6 +57,8 @@ public class QuestionPagerActivity extends AppCompatActivity {
                 return mQuestions.size();
             }
         });
+
+
 
         for(int i = 0; i < mQuestions.size(); i++){
             if (mQuestions.get(i).getID().equals(questionID)){

@@ -19,7 +19,7 @@ public class QuestionLab {
     private QuestionLab(Context context){
         mQuestions = new ArrayList<Question>();
 
-        for(int i= 0; i<2; i++){
+        for(int i= 0; i<6; i++){
 
             String question = "Question " + i;
             question += " This is a very long ass question that i am not sure how it will be displayed";
