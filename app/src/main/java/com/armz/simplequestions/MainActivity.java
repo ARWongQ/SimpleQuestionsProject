@@ -95,15 +95,15 @@ public class MainActivity extends AppCompatActivity {
             //Returns the desired fragment
             switch (position){
                 case 0:
-                   Tab1Practice tab1 = new Tab1Practice();
-                   return tab1;
+                    CategoryListFragment tab1 = new CategoryListFragment();
+                    return tab1;
 
                 case 1:
                     AccomplishmentListFragment tab2 = new AccomplishmentListFragment();
                     return tab2;
 
                 case 2:
-                    Tab3Contacts tab3 = new Tab3Contacts();
+                    Tab1Practice tab3 = new Tab1Practice();
                     return tab3;
 
                 default:
