@@ -59,13 +59,15 @@ public class QuestionPagerActivity extends AppCompatActivity {
         });
 
 
-
-        for(int i = 0; i < mQuestions.size(); i++){
+        int i;
+        for(i = 0; i < mQuestions.size(); i++){
             if (mQuestions.get(i).getID() == questionID){
                 mViewPager.setCurrentItem(i);
                 break;
             }
         }
+
+
 
     }
 }
