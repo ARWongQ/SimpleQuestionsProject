@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,9 +40,9 @@ public class QuestionListFragment extends Fragment {
     //sets up CrimeListFragment's UI
     private void updateUI(){
         QuestionLab questionLab = QuestionLab.get(getActivity());
-        List<Question> crimes = questionLab.getQuestions();
+        List<Question> questions = questionLab.getQuestions();
 
-        mAdapter = new QuestionAdapter(crimes);
+        mAdapter = new QuestionAdapter(questions);
         mQuestionRecyclerView.setAdapter(mAdapter);
     }
 
@@ -49,26 +50,28 @@ public class QuestionListFragment extends Fragment {
     //VIEW_HOLDER  (Detects presses)
     private class QuestionHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         //Parts of the widget
-        private TextView mAnswerTextView;
         private TextView mQuestionTextView;
+        private ImageView mSolvedImageView;
 
-        private Question mQuestion;               //Crime to be displayed
 
-        //Inflate the list_item_crime.xml constructor
+        private Question mQuestion;
+
+
         public QuestionHolder(LayoutInflater inflater, ViewGroup parent){
             super(inflater.inflate(R.layout.list_item_question,parent,false));
             itemView.setOnClickListener(this);
 
-            mAnswerTextView = (TextView) itemView.findViewById(R.id.question_answer);
             mQuestionTextView = (TextView) itemView.findViewById(R.id.question_question);
+            mSolvedImageView = (ImageView) itemView.findViewById(R.id.question_solved);
+
 
         }
 
-        //Called each time a new Crime should be displayed in CrimeHolder
+
         public void bind(Question question){
             mQuestion = question;
-            mAnswerTextView.setText(mQuestion.getAnswer());
-            mQuestionTextView.setText(mQuestion.getQuestion());
+            mQuestionTextView.setText(mQuestion.getQuestionDisplay());
+            //mSolvedImageView.setVisibility(mQuestion.getMhasPassed() ? View.VISIBLE : View.GONE);
         }
 
         @Override
@@ -83,8 +86,8 @@ public class QuestionListFragment extends Fragment {
     private class QuestionAdapter extends RecyclerView.Adapter<QuestionHolder>{
         private List<Question> mQuestions;
 
-        public QuestionAdapter(List<Question> crimes){
-            mQuestions = crimes;
+        public QuestionAdapter(List<Question> questions){
+            mQuestions = questions;
         }
 
         //Called whenever there is a need of a new ViewHolder to display an item with
@@ -92,7 +95,7 @@ public class QuestionListFragment extends Fragment {
         public QuestionHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
 
-            //Create new CrimeHolder
+
             return new QuestionHolder(layoutInflater, parent);
         }
 
@@ -108,9 +111,5 @@ public class QuestionListFragment extends Fragment {
             return mQuestions.size();
         }
     }
-
-
-
-
 
 }

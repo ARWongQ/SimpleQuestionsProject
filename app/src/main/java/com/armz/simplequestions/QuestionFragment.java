@@ -24,8 +24,12 @@ public class QuestionFragment extends Fragment {
     private Question mQuestion;
 
     private TextView mQuestionTextView;
-    private TextView mAnswerTextView;
-    private TextView mIdTextView;
+    private TextView mQuestionDisplayTextView;
+    private Button mOption1;
+    private Button mOption2;
+    private Button mOption3;
+    private Button mOption4;
+    private List<String> options;
 
     private static final String ARG_QUESTION_ID = "question_id";
 
@@ -76,12 +80,23 @@ public class QuestionFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_question, container, false);
 
         mQuestionTextView = (TextView) rootView.findViewById(R.id.question_textView);
-        mAnswerTextView = (TextView) rootView.findViewById(R.id.answer_textView);
-        mIdTextView = (TextView) rootView.findViewById(R.id.id_textView);
+        mQuestionDisplayTextView = (TextView) rootView.findViewById(R.id.questionDisplay_textView);
+        mOption1 = (Button) rootView.findViewById(R.id.button_One);
+        mOption2 = (Button) rootView.findViewById(R.id.button_Two);
+        mOption3 = (Button) rootView.findViewById(R.id.button_Three);
+        mOption4 = (Button) rootView.findViewById(R.id.button_Four);
+
+
 
         mQuestionTextView.setText(mQuestion.getQuestion());
-        mAnswerTextView.setText(mQuestion.getAnswer());
-        //mIdTextView.setText(mQuestion.getID());
+        mQuestionDisplayTextView.setText(mQuestion.getQuestionDisplay());
+        mOption1.setText(mQuestion.getAnswer());
+
+        options = mQuestion.getWrongAnswers();
+
+        mOption2.setText(options.get(0));
+        mOption3.setText(options.get(1));
+        mOption4.setText(options.get(2));
 
         return rootView;
     }

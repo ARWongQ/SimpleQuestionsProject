@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -226,16 +226,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //Returns the desired fragment
             switch (position){
                 case 0:
-                   Tab1Practice tab1 = new Tab1Practice();
-                   return tab1;
+                    CategoryListFragment tab1 = new CategoryListFragment();
+                    return tab1;
 
                 case 1:
-                    Tab2Contacts tab2 = new Tab2Contacts();
+                    AccomplishmentListFragment tab2 = new AccomplishmentListFragment();
                     return tab2;
 
                 case 2:
-                    QuestionListFragment tab3 = new QuestionListFragment();
+                    RankingListFragment tab3 = new RankingListFragment();
                     return tab3;
+
+                case 3:
+                    Tab1Practice tab4 = new Tab1Practice();
+                    return tab4;
 
                 default:
                     System.out.println("Tab not found");
@@ -246,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
 

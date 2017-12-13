@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">SimpleQuestions</string>
     <string name="tab_text_1">Practice</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="tab_text_3">Tab 3</string>
+    <string name="tab_text_2">Tasks</string>
+    <string name="tab_text_3">Rank</string>
+    <string name="tab_text_4">Store</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <!--<string name="default_web_client_id">949711958589-j07h1rbqt63ao3svs3enp56540438adg.apps.googleusercontent.com</string>-->

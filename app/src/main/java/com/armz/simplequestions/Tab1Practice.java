@@ -24,18 +24,16 @@ public class Tab1Practice extends Fragment {
 
         View rootView = inflater.inflate(R.layout.tab1practice, container, false);
 
-        myTestingButton = (Button) rootView.findViewById(R.id.button);
-        myTestingButton.setText("TESTING");
+        myTestingButton = (Button) rootView.findViewById(R.id.button_category_one);
+        myTestingButton.setText("CATEGORY ONE");
         myTestingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //Method from the other activity to pass the data
                 Intent intent = QuestionActivity.newIntent(Tab1Practice.this.getContext() , myTestingButton.getText().toString());
                 startActivity(intent);
 
-                //when you want to hear back from the child activity use this
-                //startActivityForResult(intent,REQUEST_CODE_CHEAT);
+
             }
         });
 
