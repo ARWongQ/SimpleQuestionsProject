@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "949711958589",
+    "firebase_url": "https://simplequestionsproject.firebaseio.com",
+    "project_id": "simplequestionsproject",
+    "storage_bucket": "simplequestionsproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949711958589:android:ec57bc9163c1acbc",
+        "android_client_info": {
+          "package_name": "com.armz.simplequestions"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "949711958589-o7tfmjupiva5slh1bpltcm4ug58kvrbv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.armz.simplequestions",
+            "certificate_hash": "baf82d0d0c01e0cd099b6dfc2ad0844fe92b355c"
+          }
+        },
+        {
+          "client_id": "949711958589-j07h1rbqt63ao3svs3enp56540438adg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU8Xhkccn3Lrapsef4JfNLsDXBlHqzsMI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "949711958589-j07h1rbqt63ao3svs3enp56540438adg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
