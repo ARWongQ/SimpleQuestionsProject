@@ -1,38 +1,20 @@
 package com.armz.simplequestions;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.FileProvider;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.io.File;
-import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
-import static android.widget.CompoundButton.*;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by augustowong on 12/10/17.
@@ -63,6 +45,27 @@ public class QuestionFragment extends Fragment {
         super.onCreate(savedInstanceState);
         UUID questionId = (UUID) getArguments().getSerializable(ARG_QUESTION_ID);
         mQuestion = QuestionLab.get(getActivity()).getQuestion(questionId);
+
+        System.out.println("Setting up the Firebase --------------------------------------");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("question");
+
+        System.out.println("Setting up the Firebase ---------------------------------------");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Question question = dataSnapshot.getValue(Question.class);
+                System.out.println("This is the question");
+                System.out.println(question.getID());
+                System.out.println(question.getAnswer());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
     }
 
 
