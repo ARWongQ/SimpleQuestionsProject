@@ -9,23 +9,33 @@ import java.util.UUID;
  */
 
 public class Question {
-    private UUID mID;
+    private int mID;
     private String mQuestionDisplay;
     private String mQuestion;
     private String mAnswer;
     private Boolean mhasPassed;
     private List<String> wrongAnswers = new ArrayList<String>();
+    private String mHint;
 
 
 
     //Constructor
-    public Question(String mQuestion, String mAnswer, Boolean mhasPassed, UUID mID, int numb, List<String> optionalAnswers){
+    public Question(String mQuestion, String mAnswer, Boolean mhasPassed, int mID, int numb, List<String> optionalAnswers, String mHint){
         this.mQuestion = mQuestion;
         this.mAnswer = mAnswer;
         this.mhasPassed = mhasPassed;
         this.mID = mID;
         this.mQuestionDisplay = "Problem #" + numb;
         this.wrongAnswers = optionalAnswers;
+        this.mHint = mHint;
+    }
+
+    public String getHint() {
+        return mHint;
+    }
+
+    public void setHint(String hint) {
+        mHint = hint;
     }
 
     public List<String> getWrongAnswers() {
@@ -44,11 +54,11 @@ public class Question {
         mQuestionDisplay = questionDisplay;
     }
 
-    public UUID getID() {
+    public int getID() {
         return mID;
     }
 
-    public void setID(UUID ID) {
+    public void setID(int ID) {
         mID = ID;
     }
 

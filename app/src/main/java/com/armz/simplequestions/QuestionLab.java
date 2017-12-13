@@ -22,13 +22,14 @@ public class QuestionLab {
         for(int i= 0; i<6; i++){
 
             String question = "Question " + i;
+            String hint = "Hint " + i;
             question += " This is a very long ass question that i am not sure how it will be displayed";
             List<String> options = new ArrayList<String>();
             options.add("Option 1");
             options.add("Option 2");
             options.add("Option 3");
 
-            Question newQ = new Question(question,"Answer",false, UUID.randomUUID(), i+1, options);
+            Question newQ = new Question(question,"Answer",false, i, i+1, options, hint );
             mQuestions.add(newQ);
         }
     }
@@ -45,9 +46,9 @@ public class QuestionLab {
         return mQuestions;
     }
 
-    public Question getQuestion(UUID id){
+    public Question getQuestion(int id){
         for(Question curQuestion: mQuestions){
-            if(curQuestion.getID().equals(id)){
+            if(curQuestion.getID() == id){
                 return curQuestion;
             }
         }

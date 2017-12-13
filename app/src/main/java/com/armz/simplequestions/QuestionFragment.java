@@ -52,7 +52,7 @@ public class QuestionFragment extends Fragment {
     private static final String ARG_QUESTION_ID = "question_id";
 
 
-    public static QuestionFragment newInstance(UUID questionID) {
+    public static QuestionFragment newInstance(int questionID) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_QUESTION_ID, questionID);
         System.out.println("MY QUESTION ID in QUESTION FRAGMENT " + questionID);
@@ -65,7 +65,7 @@ public class QuestionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UUID questionId = (UUID) getArguments().getSerializable(ARG_QUESTION_ID);
+        int questionId = (int) getArguments().getSerializable(ARG_QUESTION_ID);
         mQuestion = QuestionLab.get(getActivity()).getQuestion(questionId);
     }
 

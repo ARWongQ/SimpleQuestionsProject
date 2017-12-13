@@ -22,7 +22,7 @@ public class QuestionPagerActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private List<Question> mQuestions;
 
-    public static Intent newIntent(Context packageContext, UUID questionID) {
+    public static Intent newIntent(Context packageContext, int questionID) {
         Intent intent = new Intent(packageContext, QuestionPagerActivity.class);
         intent.putExtra(EXTRA_QUESTION_ID, questionID);
         return intent;
@@ -33,7 +33,7 @@ public class QuestionPagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_pager);
 
-        UUID questionID = (UUID) getIntent()
+        int questionID = (int) getIntent()
                 .getSerializableExtra(EXTRA_QUESTION_ID);
 
         mViewPager = (ViewPager) findViewById(R.id.question_view_pager);
@@ -61,7 +61,7 @@ public class QuestionPagerActivity extends AppCompatActivity {
 
 
         for(int i = 0; i < mQuestions.size(); i++){
-            if (mQuestions.get(i).getID().equals(questionID)){
+            if (mQuestions.get(i).getID() == questionID){
                 mViewPager.setCurrentItem(i);
                 break;
             }
