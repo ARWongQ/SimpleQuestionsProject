@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -15,8 +16,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
 import android.widget.TextView;
 import android.widget.Toast;
+
+import android.widget.Button;
+
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -48,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private ViewPager mViewPager;
 
+
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
 
@@ -57,9 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private GoogleSignInClient mGoogleSignInClient;
 
-
     //Making sure everything is set up
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
 
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
     }
 
@@ -238,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     return tab3;
 
                 case 3:
-                    Tab1Practice tab4 = new Tab1Practice();
+                    StoreListFragment tab4 = new StoreListFragment();
                     return tab4;
 
                 default:

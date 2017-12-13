@@ -14,24 +14,45 @@ import java.util.UUID;
 public class Question {
 
     private int mID;
-//
-//    private String mQuestionDisplay;
+    private String mQuestionDisplay;
+    private String mQuestion;
+    private String mAnswer;
+    private Boolean mhasPassed;
+    private List<String> wrongAnswers = new ArrayList<String>();
+    private String mHint;
 
     public int getmID() {
         return mID;
+    }
+
+    //Constructor
+    public Question(String mQuestion, String mAnswer, Boolean mhasPassed, int mID, int numb, List<String> optionalAnswers, String mHint){
+        this.mQuestion = mQuestion;
+        this.mAnswer = mAnswer;
+        this.mhasPassed = mhasPassed;
+        this.mID = mID;
+        this.mQuestionDisplay = "Problem #" + numb;
+        this.wrongAnswers = optionalAnswers;
+        this.mHint = mHint;
+    }
+
+
+    // Created constructor with no Arguments
+    // needed for Firebase
+    public Question() {
     }
 
     public void setmID(int mID) {
         this.mID = mID;
     }
 
-//    public String getmQuestionDisplay() {
-//        return mQuestionDisplay;
-//    }
-//
-//    public void setmQuestionDisplay(String mQuestionDisplay) {
-//        this.mQuestionDisplay = mQuestionDisplay;
-//    }
+    public String getmQuestionDisplay() {
+        return mQuestionDisplay;
+    }
+
+    public void setmQuestionDisplay(String mQuestionDisplay) {
+        this.mQuestionDisplay = mQuestionDisplay;
+    }
 
     public String getmQuestion() {
         return mQuestion;
@@ -49,52 +70,29 @@ public class Question {
         this.mAnswer = mAnswer;
     }
 
-    public String getmAnswer2() {
-        return mAnswer2;
+    public Boolean getMhasPassed() {
+        return mhasPassed;
     }
 
-    public void setmAnswer2(String mAnswer2) {
-        this.mAnswer2 = mAnswer2;
+    public void setMhasPassed(Boolean mhasPassed) {
+        this.mhasPassed = mhasPassed;
     }
 
-    public String getmAnswer3() {
-        return mAnswer3;
+    public List<String> getWrongAnswers() {
+        return wrongAnswers;
     }
 
-    public void setmAnswer3(String mAnswer3) {
-        this.mAnswer3 = mAnswer3;
+    public void setWrongAnswers(List<String> wrongAnswers) {
+        this.wrongAnswers = wrongAnswers;
     }
 
-    public String getmAnswer4() {
-        return mAnswer4;
+    public String getmHint() {
+        return mHint;
     }
 
-    public void setmAnswer4(String mAnswer4) {
-        this.mAnswer4 = mAnswer4;
+    public void setmHint(String mHint) {
+        this.mHint = mHint;
     }
 
-    private String mQuestion;
-
-    private String mAnswer;
-    // for now though...
-    private String mAnswer2;
-    private String mAnswer3;
-    private String mAnswer4;
-
-
-    // Created constructor with no Arguments
-    public Question() {
-    }
-
-    //Constructor
-    public Question(int mID, String mQuestion, String mAnswer, String mAnswer2, String mAnswer3, String mAnswer4){
-        this.mQuestion = mQuestion;
-        this.mAnswer = mAnswer;
-        this.mID = mID;
-        this.mAnswer2 = mAnswer2;
-        this.mAnswer3 = mAnswer3;
-        this.mAnswer4 = mAnswer4;
-//        this.mQuestionDisplay = "Problem #" + numb;
-    }
 
 }

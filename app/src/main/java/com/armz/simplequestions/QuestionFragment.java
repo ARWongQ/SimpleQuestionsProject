@@ -94,17 +94,10 @@ public class QuestionFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Question mQuestion = dataSnapshot.getValue(Question.class);
                 System.out.println("This is the question");
-                //System.out.println(question.getID());
                 System.out.println(mQuestion.getmQuestion());
 
                 mQuestionTextView.setText(mQuestion.getmQuestion());
                 mOption1.setText(mQuestion.getmAnswer());
-
-                mOption2.setText(mQuestion.getmAnswer2());
-                mOption3.setText(mQuestion.getmAnswer3());
-                mOption4.setText(mQuestion.getmAnswer4());
-
-                System.out.println("Answer1: --------------" + mQuestion.getmAnswer());
             }
 
             @Override

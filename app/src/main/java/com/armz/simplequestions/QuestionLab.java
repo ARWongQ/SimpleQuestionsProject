@@ -19,16 +19,17 @@ public class QuestionLab {
     private QuestionLab(Context context){
         mQuestions = new ArrayList<Question>();
 
-        for(int i= 0; i<2; i++){
+        for(int i= 0; i<6; i++){
 
             String question = "Question " + i;
+            String hint = "Hint " + i;
             question += " This is a very long ass question that i am not sure how it will be displayed";
             List<String> options = new ArrayList<String>();
             options.add("Option 1");
             options.add("Option 2");
             options.add("Option 3");
 
-            Question newQ = new Question(i, question,"Answer","Answer2", "Answer3", "Answer4");
+            Question newQ = new Question(question,"Answer",false, i, i+1, options, hint );
             mQuestions.add(newQ);
         }
     }
