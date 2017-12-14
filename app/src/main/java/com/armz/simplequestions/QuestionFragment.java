@@ -35,7 +35,7 @@ public class QuestionFragment extends Fragment {
     private Button mOption3;
     private Button mOption4;
     private TextView mHintTextView;
-    private List<String> options;
+
 
     private static final String ARG_QUESTION_ID = "question_id";
 
@@ -90,11 +90,11 @@ public class QuestionFragment extends Fragment {
         mHintTextView.setText(mQuestion.getHint());
         mHintTextView.setVisibility(View.INVISIBLE);
 
-        options = mQuestion.getWrongAnswers();
 
-        mOption2.setText(options.get(0));
-        mOption3.setText(options.get(1));
-        mOption4.setText(options.get(2));
+
+        mOption2.setText(mQuestion.getWrongAnswer1());
+        mOption3.setText(mQuestion.getWrongAnswer2());
+        mOption4.setText(mQuestion.getWrongAnswer3());
 
 
 

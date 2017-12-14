@@ -24,12 +24,9 @@ public class QuestionLab {
             String question = "Question " + i;
             String hint = "Hint " + i;
             question += " This is a very long ass question that i am not sure how it will be displayed";
-            List<String> options = new ArrayList<String>();
-            options.add("Option 1");
-            options.add("Option 2");
-            options.add("Option 3");
 
-            Question newQ = new Question(question,"Answer",false, i, i+1, options, hint );
+            Question newQ = new Question(question,"Answer",false, i, i+1, hint,
+                    "a","b","c");
             mQuestions.add(newQ);
         }
     }
