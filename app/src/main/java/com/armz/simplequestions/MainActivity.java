@@ -1,5 +1,6 @@
 package com.armz.simplequestions;
 
+import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -59,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
+        getWindow().getDecorView().setBackgroundColor(Color.BLUE);
 
     }
 
