@@ -1,5 +1,6 @@
 package com.armz.simplequestions;
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
 import android.content.Intent;
@@ -15,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,9 +36,14 @@ import static android.content.ContentValues.TAG;
 public class CategoryListFragment  extends Fragment {
     private RecyclerView mCategoryRecyclerView;
     private CategoryAdapter mAdapter;
+//    private FirebaseDatabase mFirebaseDatabase;
+//    private FirebaseAuth mAuth;
+//    private FirebaseAuth.AuthStateListener mAuthListener;
+//    private DatabaseReference myRef;
+//    private  String userID;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState){
         //inflate the view
         View view = inflater.inflate(R.layout.fragment_category_list, container, false);
 
@@ -54,6 +62,7 @@ public class CategoryListFragment  extends Fragment {
 
         // hold all categories read from Firebase
         final List<Category> newCategories = new ArrayList<Category>();
+
 
         mAdapter = new CategoryAdapter(newCategories);
 
@@ -77,6 +86,8 @@ public class CategoryListFragment  extends Fragment {
 
                     // Add to list of categories
                     newCategories.add(category);
+                    // And create recycler view adapter with the changes
+                    mCategoryRecyclerView.setAdapter(mAdapter);
 
                     Log.d(TAG, "showData: size of category " + newCategories.size());
                     Log.d(TAG, "showData: size of children " + dataSnapshot.getChildrenCount());
@@ -89,23 +100,6 @@ public class CategoryListFragment  extends Fragment {
             }
         });
 
-
-        System.out.println("Are we printing?? ------------ ");
-        Category cur;
-        String cat;
-//        for(int i= 1; i < 4; i++){
-//            cat = "Category #" + i;
-//            cur = new Category(cat, i%2==0);
-//            categories.add(cur);
-//        }
-
-//        cur = new Category("Blocked Category", false, 20);
-//        categories.add(cur);
-
-
-       // mAdapter = new CategoryAdapter(newCategories);
-
-        mCategoryRecyclerView.setAdapter(mAdapter);
     }
 
 

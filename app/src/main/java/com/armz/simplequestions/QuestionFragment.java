@@ -84,27 +84,27 @@ public class QuestionFragment extends Fragment {
         mOption3 = rootView.findViewById(R.id.button_Three);
         mOption4 = rootView.findViewById(R.id.button_Four);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("question");
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("question");
 
 
 
-        myRef.child("Are you there NOW?").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Question mQuestion = dataSnapshot.getValue(Question.class);
-                System.out.println("This is the question");
-                System.out.println(mQuestion.getmQuestion());
-
-                mQuestionTextView.setText(mQuestion.getmQuestion());
-                mOption1.setText(mQuestion.getmAnswer());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
+//        myRef.child("Are you there NOW?").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Question mQuestion = dataSnapshot.getValue(Question.class);
+//                System.out.println("This is the question");
+//                System.out.println(mQuestion.getmQuestion());
+//
+//                mQuestionTextView.setText(mQuestion.getmQuestion());
+//                mOption1.setText(mQuestion.getmAnswer());
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                System.out.println("The read failed: " + databaseError.getCode());
+//            }
+//        });
 
 //        mQuestionTextView.setText(mQuestion.getQuestion());
 //        mQuestionDisplayTextView.setText(mQuestion.getQuestionDisplay());

@@ -1,9 +1,12 @@
 package com.armz.simplequestions;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 /**
  * Created by augustowong on 12/13/17.
  */
 
+@IgnoreExtraProperties
 public class Category {
     private String name;
     private Boolean hasPermission;

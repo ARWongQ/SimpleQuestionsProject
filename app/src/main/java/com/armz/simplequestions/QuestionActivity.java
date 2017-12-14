@@ -59,7 +59,12 @@ public class QuestionActivity extends AppCompatActivity {
             //Returns the desired fragment
             switch (position){
                 case 0:
+                    // We need to pass the title of the category to the fragment, so firebase can search
                     QuestionListFragment tab3 = new QuestionListFragment();
+                    Bundle b = new Bundle();
+                    b.putString("CategoryName", mTitleTextView.getText().toString());
+                    tab3.setArguments(b);
+
                     return tab3;
 
                 default:
