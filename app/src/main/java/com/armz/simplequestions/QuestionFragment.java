@@ -41,9 +41,8 @@ public class QuestionFragment extends Fragment {
 
     //Gyro Sensor for hint
     private SensorManager mSensorManager;
-    private Sensor mGyro;
     private Sensor mProximitySensor;
-    private String mHint;
+
 
 
 
@@ -63,11 +62,8 @@ public class QuestionFragment extends Fragment {
         int questionId = (int) getArguments().getSerializable(ARG_QUESTION_ID);
         mQuestion = QuestionLab.get(getActivity()).getQuestion(questionId);
 
-        //Gyro
-        mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
-        mGyro = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-
         //Proximity
+        mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         mProximitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
     }
 
@@ -105,28 +101,7 @@ public class QuestionFragment extends Fragment {
         return rootView;
     }
 
-    //My Gyro Data
-    public SensorEventListener gyroListener = new SensorEventListener() {
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-            /*float x = event.values[0];
-            float y = event.values[1];
-            float z = event.values[2];
 
-            if((int) y >= 3){
-                Toast.makeText(getActivity(),mQuestion.getHint(), Toast.LENGTH_SHORT).show();
-            }else if((int) y <= -3){
-                Toast.makeText(getActivity(),mQuestion.getHint(), Toast.LENGTH_SHORT).show();
-            }*/
-
-
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-        }
-    };
 
     //My proximity Sensor
     public SensorEventListener proxListener = new SensorEventListener() {
@@ -150,8 +125,6 @@ public class QuestionFragment extends Fragment {
     @Override
     public void onStop(){
         super.onStop();
-        //gyro
-        mSensorManager.unregisterListener(gyroListener);
 
         //Proximity
         mSensorManager.unregisterListener(proxListener);
@@ -162,8 +135,6 @@ public class QuestionFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
-        //gyro
-        mSensorManager.registerListener(gyroListener,mGyro, mSensorManager.SENSOR_DELAY_NORMAL);
 
         //Proximity
         mSensorManager.registerListener(proxListener,mProximitySensor, 2*1000*1000);

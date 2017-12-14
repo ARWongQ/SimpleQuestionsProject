@@ -1,6 +1,11 @@
 package com.armz.simplequestions;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,10 +18,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+import java.util.Random;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+
+
+    private SensorManager mSensorManager;
+    private Sensor mGyro;
+    private ArrayList<String> mGreetings = new ArrayList<>();
 
 
 
@@ -61,10 +76,22 @@ public class MainActivity extends AppCompatActivity {
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
-        getWindow().getDecorView().setBackgroundColor(Color.BLUE);
+        //Gyro
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mGyro = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+
+        mGreetings.add("Thanks for joining");
+        mGreetings.add("Enjoy your time!");
+        mGreetings.add("There is still much to learn");
+        mGreetings.add("Go try some new questions");
+        mGreetings.add("Try new categories");
+        mGreetings.add("Check the ranking");
+        mGreetings.add("Check the store for new categories");
+        mGreetings.add("Don't forget to study");
+        mGreetings.add("You are doing a good job");
+
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -131,6 +158,63 @@ public class MainActivity extends AppCompatActivity {
             return 4;
         }
 
+
+    }
+
+    //My Gyro Data
+    public SensorEventListener gyroListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+
+            int intY = (int) y;
+
+            //Get a random greeting to display to the user
+            if(intY >= 3){
+                int start = 0;
+                int end = 8;
+                Random random = new Random();
+                long range = (long)end - (long) start + 1;
+                long fraction = (long)(range * random.nextDouble());
+
+                int randomNumb = (int) (fraction + start);
+                String display = mGreetings.get(randomNumb);
+
+                Toast myToast= Toast.makeText(MainActivity.this, display ,Toast.LENGTH_SHORT);
+
+                try{
+                    myToast.getView().isShown();
+
+                }catch(Exception e){
+                    myToast = Toast.makeText(MainActivity.this , display, Toast.LENGTH_LONG);
+                }
+                myToast.show();
+            }
+
+
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+        }
+    };
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        //Gyro
+        mSensorManager.unregisterListener(gyroListener);
+
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        //Gyro
+        mSensorManager.registerListener(gyroListener,mGyro, mSensorManager.SENSOR_DELAY_NORMAL);
 
     }
 }
