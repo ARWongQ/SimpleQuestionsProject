@@ -2,6 +2,7 @@ package com.armz.simplequestions;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -19,13 +20,14 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import java.util.List;
+import java.util.Random;
 
 
 /**
  * Created by augustowong on 12/10/17.
  */
 
-public class QuestionFragment extends Fragment {
+public class QuestionFragment extends Fragment implements View.OnClickListener{
     private Question mQuestion;
 
     private TextView mQuestionTextView;
@@ -35,6 +37,7 @@ public class QuestionFragment extends Fragment {
     private Button mOption3;
     private Button mOption4;
     private TextView mHintTextView;
+    private TextView mCorrectTextView;
 
 
     private static final String ARG_QUESTION_ID = "question_id";
@@ -81,26 +84,119 @@ public class QuestionFragment extends Fragment {
         mOption3 = (Button) rootView.findViewById(R.id.button_Three);
         mOption4 = (Button) rootView.findViewById(R.id.button_Four);
         mHintTextView = (TextView) rootView.findViewById(R.id.hint_textView);
+        mCorrectTextView = (TextView) rootView.findViewById(R.id.correctAnswer_textView);
 
 
 
         mQuestionTextView.setText(mQuestion.getQuestion());
         mQuestionDisplayTextView.setText(mQuestion.getQuestionDisplay());
-        mOption1.setText(mQuestion.getAnswer());
         mHintTextView.setText(mQuestion.getHint());
         mHintTextView.setVisibility(View.INVISIBLE);
+        mCorrectTextView.setVisibility(View.INVISIBLE);
 
 
 
-        mOption2.setText(mQuestion.getWrongAnswer1());
-        mOption3.setText(mQuestion.getWrongAnswer2());
-        mOption4.setText(mQuestion.getWrongAnswer3());
+        int start = 0;
+        int end = 3;
+        Random random = new Random();
+        long range = (long)end - (long) start + 1;
+        long fraction = (long)(range * random.nextDouble());
+
+        int randomNumb = (int) (fraction + start);
+
+        switch (randomNumb){
+            case 0:
+                mOption1.setText(mQuestion.getAnswer());
+                mOption2.setText(mQuestion.getWrongAnswer1());
+                mOption3.setText(mQuestion.getWrongAnswer2());
+                mOption4.setText(mQuestion.getWrongAnswer3());
+                break;
+            case 1:
+                mOption2.setText(mQuestion.getAnswer());
+                mOption3.setText(mQuestion.getWrongAnswer1());
+                mOption4.setText(mQuestion.getWrongAnswer2());
+                mOption1.setText(mQuestion.getWrongAnswer3());
+                break;
+            case 2:
+                mOption3.setText(mQuestion.getAnswer());
+                mOption4.setText(mQuestion.getWrongAnswer1());
+                mOption1.setText(mQuestion.getWrongAnswer2());
+                mOption2.setText(mQuestion.getWrongAnswer3());
+                break;
+            case 3:
+                mOption4.setText(mQuestion.getAnswer());
+                mOption1.setText(mQuestion.getWrongAnswer1());
+                mOption2.setText(mQuestion.getWrongAnswer2());
+                mOption3.setText(mQuestion.getWrongAnswer3());
+                break;
+        }
+
+        //Setting listener
+        mOption1.setOnClickListener(this);
+        mOption2.setOnClickListener(this);
+        mOption3.setOnClickListener(this);
+        mOption4.setOnClickListener(this);
+
+
 
 
 
         return rootView;
     }
 
+
+    @Override
+    public void onClick(View v) {
+        // default method for handling onClick Events..
+        switch (v.getId()) {
+
+            case R.id.button_One:
+                displayFeedback(mOption1);
+                break;
+
+            case R.id.button_Two:
+                displayFeedback(mOption2);
+                break;
+
+            case R.id.button_Three:
+                displayFeedback(mOption3);
+                break;
+
+            case R.id.button_Four:
+                displayFeedback(mOption4);
+                break;
+
+            default:
+                break;
+        }
+
+
+    }
+
+    private void displayFeedback(Button ButtonPressed){
+        if(isRight(ButtonPressed.getText().toString())){
+            mCorrectTextView.setText("Correct!");
+            mCorrectTextView.setVisibility(View.VISIBLE);
+        }else if(mCorrectTextView.getText().equals("Try Again!")){
+            mCorrectTextView.setText("One more time!");
+        }
+        else{
+            mCorrectTextView.setText("Try Again!");
+            mCorrectTextView.setVisibility(View.VISIBLE);
+        }
+    }
+
+
+
+    //Returns true if the button pressed is the right answer
+    private Boolean isRight(String ButtonText){
+        if(ButtonText.equals(mQuestion.getAnswer())){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
 
 
     //My proximity Sensor
