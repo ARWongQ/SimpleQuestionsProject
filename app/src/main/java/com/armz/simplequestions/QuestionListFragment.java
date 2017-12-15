@@ -83,17 +83,10 @@ public class QuestionListFragment extends Fragment {
                             question.setmQuestionDisplay("Problem " + question.getmID());
                             question.setmQuestion(ds2.getKey());
                             question.setmAnswer(ds2.getValue(Question.class).getmAnswer());
-//                            question.setMhasPassed(ds2.getValue(Question.class).getMhasPassed());
                             question.setmHint(ds2.getValue(Question.class).getmHint());
-                            List<String> wrongAnswers = new ArrayList<String>();
                             question.setWrongAnswer1(ds2.getValue(Question.class).getWrongAnswer1());
                             question.setWrongAnswer2(ds2.getValue(Question.class).getWrongAnswer2());
                             question.setWrongAnswer3(ds2.getValue(Question.class).getWrongAnswer3());
-
-                            wrongAnswers.add(question.getWrongAnswer1());
-                            wrongAnswers.add(question.getWrongAnswer2());
-                            wrongAnswers.add(question.getWrongAnswer3());
-                            question.setWrongAnswers(wrongAnswers);
 
                             //display all the information
                             Log.d(TAG, "showData: ID: " + question.getmID());
@@ -101,9 +94,9 @@ public class QuestionListFragment extends Fragment {
                             Log.d(TAG, "showData: mQuestion: " + question.getmQuestion());
                             Log.d(TAG, "showData: mAnswer: " + question.getmAnswer());
                             Log.d(TAG, "showData: mHasPassed: " + question.getMhasPassed());
-                            Log.d(TAG, "showData: wrongAnswer1: " + question.getWrongAnswers().get(0));
-                            Log.d(TAG, "showData: wrongAnswer2: " + question.getWrongAnswers().get(1));
-                            Log.d(TAG, "showData: wrongAnswer3: " + question.getWrongAnswers().get(2));
+                            Log.d(TAG, "showData: wrongAnswer1: " + question.getWrongAnswer1());
+                            Log.d(TAG, "showData: wrongAnswer2: " + question.getWrongAnswer2());
+                            Log.d(TAG, "showData: wrongAnswer3: " + question.getWrongAnswer3());
 
                             // Add to list of categories
                             questions.add(question);

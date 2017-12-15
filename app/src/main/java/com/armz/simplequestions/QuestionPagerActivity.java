@@ -40,8 +40,9 @@ public class QuestionPagerActivity extends AppCompatActivity {
 
 
         mQuestions = QuestionLab.get(this).getQuestions();
-        FragmentManager fragmentManager = getSupportFragmentManager();
 
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
         mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
 
             @Override
@@ -58,14 +59,14 @@ public class QuestionPagerActivity extends AppCompatActivity {
             }
         });
 
-
-
         for(int i = 0; i < mQuestions.size(); i++){
             if (mQuestions.get(i).getmID() == questionID){
                 mViewPager.setCurrentItem(i);
                 break;
             }
         }
+
+
 
     }
 }

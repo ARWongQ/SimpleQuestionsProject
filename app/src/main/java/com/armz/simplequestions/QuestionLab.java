@@ -20,7 +20,6 @@ public class QuestionLab {
     public QuestionLab(Context context){
         mQuestions = new ArrayList<Question>();
 
-
     }
 
     public static QuestionLab get(Context context){

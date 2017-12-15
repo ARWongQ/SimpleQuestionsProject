@@ -2,6 +2,12 @@ package com.armz.simplequestions;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.content.Context;
+import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
@@ -13,6 +19,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +28,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import android.widget.Button;
+import android.widget.Toast;
+import java.util.Random;
+
+import java.util.ArrayList;
 
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -64,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager mViewPager;
 
 
+
     // Google sign-in variables and Firebase things
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -74,6 +86,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     final List<User> users = new ArrayList<>();
 
     Bundle bundle = new Bundle();
+
+    private SensorManager mSensorManager;
+    private Sensor mGyro;
+    private ArrayList<String> mGreetings = new ArrayList<>();
+
 
 
     //Making sure everything is set up
@@ -107,7 +124,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
+        //Gyro
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mGyro = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
     }
+
 
     // [START on_start_check_user]
     @Override
@@ -196,8 +217,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         updateUI(null);
                     }
                 });
-    }
 
+
+        mGreetings.add("Thanks for joining");
+        mGreetings.add("Enjoy your time!");
+        mGreetings.add("There is still much to learn");
+        mGreetings.add("Go try some new questions");
+        mGreetings.add("Try new categories");
+        mGreetings.add("Check the ranking");
+        mGreetings.add("Check the store for new categories");
+        mGreetings.add("Don't forget to study");
+        mGreetings.add("You are doing a good job");
+
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -320,6 +353,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
     private void setupGoogleSignIn() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -388,6 +422,62 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        for (String s : lu.getBoughtCategories()) {
 //            myRef.child("users").child(fu.getDisplayName()).child("boughtCategories").child(s).setValue(1);
 //        }
-
     }
-}
+
+        //My Gyro Data
+        public SensorEventListener gyroListener = new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                float x = event.values[0];
+                float y = event.values[1];
+                float z = event.values[2];
+
+                int intY = (int) y;
+
+                //Get a random greeting to display to the user
+                if (intY >= 3) {
+                    int start = 0;
+                    int end = 8;
+                    Random random = new Random();
+                    long range = (long) end - (long) start + 1;
+                    long fraction = (long) (range * random.nextDouble());
+
+                    int randomNumb = (int) (fraction + start);
+                    String display = mGreetings.get(randomNumb);
+
+                    Toast myToast = Toast.makeText(MainActivity.this, display, Toast.LENGTH_SHORT);
+
+                    try {
+                        myToast.getView().isShown();
+
+                    } catch (Exception e) {
+                        myToast = Toast.makeText(MainActivity.this, display, Toast.LENGTH_LONG);
+                    }
+                    myToast.show();
+                }
+
+
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+            }
+        };
+
+        @Override
+        public void onStop () {
+            super.onStop();
+            //Gyro
+            mSensorManager.unregisterListener(gyroListener);
+
+        }
+
+        @Override
+        public void onResume () {
+            super.onResume();
+            //Gyro
+            mSensorManager.registerListener(gyroListener, mGyro, mSensorManager.SENSOR_DELAY_NORMAL);
+
+        }
+    }

@@ -18,7 +18,11 @@ public class Question {
     private String mQuestion;
     private String mAnswer;
     private Boolean mhasPassed;
-    private List<String> wrongAnswers = new ArrayList<String>();
+    private String mWrongAnswer1;
+    private String mWrongAnswer2;
+    private String mWrongAnswer3;
+
+
     private String mHint;
     private String wrongAnswer1;
 
@@ -54,16 +58,18 @@ public class Question {
     }
 
     //Constructor
-    public Question(String mQuestion, String mAnswer, Boolean mhasPassed, int mID, int numb, List<String> optionalAnswers, String mHint){
+    public Question(String mQuestion, String mAnswer, Boolean mhasPassed, int mID, int numb, String mHint,
+                    String mWrongAnswer1, String mWrongAnswer2, String mWrongAnswer3){
         this.mQuestion = mQuestion;
         this.mAnswer = mAnswer;
         this.mhasPassed = mhasPassed;
         this.mID = mID;
         this.mQuestionDisplay = "Problem #" + numb;
-        this.wrongAnswers = optionalAnswers;
+        this.mWrongAnswer1 = mWrongAnswer1;
+        this.mWrongAnswer2 = mWrongAnswer2;
+        this.mWrongAnswer3 = mWrongAnswer3;
         this.mHint = mHint;
     }
-
 
     // Created constructor with no Arguments
     // needed for Firebase
@@ -106,13 +112,13 @@ public class Question {
         this.mhasPassed = mhasPassed;
     }
 
-    public List<String> getWrongAnswers() {
-        return wrongAnswers;
-    }
-
-    public void setWrongAnswers(List<String> wrongAnswers) {
-        this.wrongAnswers = wrongAnswers;
-    }
+//    public List<String> getWrongAnswers() {
+//        return wrongAnswers;
+//    }
+//
+//    public void setWrongAnswers(List<String> wrongAnswers) {
+//        this.wrongAnswers = wrongAnswers;
+//    }
 
     public String getmHint() {
         return mHint;
