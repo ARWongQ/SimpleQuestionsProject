@@ -23,7 +23,7 @@ public class QuestionLab {
 
             String question = "Question " + i;
             String hint = "Hint " + i;
-            question += " This is a very long ass question that i am not sure how it will be displayed";
+            question += "This is a very long ass question that i am not sure how it will be displayed";
 
             Question newQ = new Question(question,"Answer",false, i, i+1, hint,
                     "a","b","c");

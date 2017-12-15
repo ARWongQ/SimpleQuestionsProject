@@ -40,8 +40,9 @@ public class QuestionPagerActivity extends AppCompatActivity {
 
 
         mQuestions = QuestionLab.get(this).getQuestions();
-        FragmentManager fragmentManager = getSupportFragmentManager();
 
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
         mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
 
             @Override
