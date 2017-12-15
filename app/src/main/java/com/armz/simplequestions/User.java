@@ -1,25 +1,35 @@
 package com.armz.simplequestions;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
+
+import java.util.ArrayList;
+
 /**
  * Created by augustowong on 12/13/17.
  */
 
+
 public class User {
     private String username;
-    private String password;
     private int level;
     private int experience;
     private int money;
     private int ranking;
 
-    public User(String username, String password, int level, int experience, int money, int ranking){
+    @Exclude
+    private ArrayList<String> boughtCategories;
+
+    public User(String username, int level, int experience, int money, int ranking){
         this.username = username;
-        this.password = password;
         this.level = level;
         this.experience = experience;
         this.money = money;
         this.ranking = ranking;
+        this.boughtCategories = new ArrayList<>();
     }
+
+    public User() {}
 
     public int getRanking() {
         return ranking;
@@ -35,14 +45,6 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public int getLevel() {
@@ -67,5 +69,13 @@ public class User {
 
     public void setMoney(int money) {
         this.money = money;
+    }
+
+    public ArrayList<String> getBoughtCategories() {
+        return boughtCategories;
+    }
+
+    public void setBoughtCategories(ArrayList<String> boughtCategories) {
+        this.boughtCategories = boughtCategories;
     }
 }

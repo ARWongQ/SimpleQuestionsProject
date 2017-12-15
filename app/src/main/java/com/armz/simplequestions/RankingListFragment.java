@@ -50,7 +50,7 @@ public class RankingListFragment extends Fragment {
         String name;
         for(int i= 1; i < 6; i++){
             name = "User #" + i;
-            cur = new User(name, "abc", i^2, i^4, i*10, i);
+            cur = new User(name, i^2, i^4, i*10, i);
 
             users.add(cur);
         }

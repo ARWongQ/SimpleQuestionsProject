@@ -53,21 +53,6 @@ public class QuestionFragment extends Fragment {
         int questionId = (int) getArguments().getSerializable(ARG_QUESTION_ID);
         mQuestion = QuestionLab.get(getActivity()).getQuestion(questionId);
 
-
-//        System.out.println("Setting up the Firebase --------------------------------------");
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//
-//
-//        System.out.println("Setting up the Firebase ---------------------------------------");
-
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("question");
-//
-//        Question q = new Question(6, "Are you there NOW?", "Yes", "No", "Maybe", "Asleep");
-//
-//        myRef.child(q.getmQuestion()).setValue(q);
-
-
     }
 
 
@@ -84,37 +69,16 @@ public class QuestionFragment extends Fragment {
         mOption3 = rootView.findViewById(R.id.button_Three);
         mOption4 = rootView.findViewById(R.id.button_Four);
 
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("question");
 
+        mQuestionTextView.setText(mQuestion.getmQuestion());
+        mQuestionDisplayTextView.setText(mQuestion.getmQuestionDisplay());
+        mOption1.setText(mQuestion.getmAnswer());
 
+        options = mQuestion.getWrongAnswers();
 
-//        myRef.child("Are you there NOW?").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Question mQuestion = dataSnapshot.getValue(Question.class);
-//                System.out.println("This is the question");
-//                System.out.println(mQuestion.getmQuestion());
-//
-//                mQuestionTextView.setText(mQuestion.getmQuestion());
-//                mOption1.setText(mQuestion.getmAnswer());
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                System.out.println("The read failed: " + databaseError.getCode());
-//            }
-//        });
-
-//        mQuestionTextView.setText(mQuestion.getQuestion());
-//        mQuestionDisplayTextView.setText(mQuestion.getQuestionDisplay());
-//        mOption1.setText(mQuestion.getAnswer());
-//
-//        options = mQuestion.getWrongAnswers();
-//
-//        mOption2.setText(options.get(0));
-//        mOption3.setText(options.get(1));
-//        mOption4.setText(options.get(2));
+        mOption2.setText(options.get(0));
+        mOption3.setText(options.get(1));
+        mOption4.setText(options.get(2));
 
         return rootView;
     }

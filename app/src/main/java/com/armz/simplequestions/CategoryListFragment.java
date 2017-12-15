@@ -36,11 +36,15 @@ import static android.content.ContentValues.TAG;
 public class CategoryListFragment  extends Fragment {
     private RecyclerView mCategoryRecyclerView;
     private CategoryAdapter mAdapter;
+    //private String currentUser;
 //    private FirebaseDatabase mFirebaseDatabase;
 //    private FirebaseAuth mAuth;
 //    private FirebaseAuth.AuthStateListener mAuthListener;
 //    private DatabaseReference myRef;
-//    private  String userID;
+    private  String username;
+    // hold all categories read from Firebase
+    final List<Category> newCategories = new ArrayList<Category>();
+    List<String> userCategories = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState){
@@ -52,53 +56,22 @@ public class CategoryListFragment  extends Fragment {
         //Recycler view requires a Layout Manager to work
         mCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        Bundle bundle = this.getArguments();
+        username = bundle.getString("username");
+
         updateUI();
 
         return view;
     }
 
 
+
     private void updateUI(){
 
-        // hold all categories read from Firebase
-        final List<Category> newCategories = new ArrayList<Category>();
 
+        getUserCategories();
+        getCategoriesFromFirebase();
 
-        mAdapter = new CategoryAdapter(newCategories);
-
-        // read Categories from Firebase
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-
-        myRef.child("categories").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    Category category = new Category();
-                    category.setName(ds.getValue(Category.class).getName()); //set the name
-                    category.setHasPermission(ds.getValue(Category.class).getHasPermission());
-                    category.setCost(ds.getValue(Category.class).getCost());
-
-                    //display all the information
-                    Log.d(TAG, "showData: name: " + category.getName());
-                    Log.d(TAG, "showData: hasPermission: " + category.getHasPermission());
-                    Log.d(TAG, "showData: cost: " + category.getCost());
-
-                    // Add to list of categories
-                    newCategories.add(category);
-                    // And create recycler view adapter with the changes
-                    mCategoryRecyclerView.setAdapter(mAdapter);
-
-                    Log.d(TAG, "showData: size of category " + newCategories.size());
-                    Log.d(TAG, "showData: size of children " + dataSnapshot.getChildrenCount());
-                }
-
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
 
     }
 
@@ -173,6 +146,86 @@ public class CategoryListFragment  extends Fragment {
         public int getItemCount() {
             return mCategories.size();
         }
+    }
+
+    private void getCategoriesFromFirebase(){
+
+        mAdapter = new CategoryAdapter(newCategories);
+
+        // read Categories from Firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+
+        myRef.child("categories").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    Category category = new Category();
+                    category.setName(ds.getValue(Category.class).getName()); //set the name
+                    category.setHasPermission(ds.getValue(Category.class).getHasPermission());
+                    category.setCost(ds.getValue(Category.class).getCost());
+
+                    //display all the information
+                    Log.d(TAG, "showData: name: " + category.getName());
+                    Log.d(TAG, "showData: hasPermission: " + category.getHasPermission());
+                    Log.d(TAG, "showData: cost: " + category.getCost());
+
+
+                    if (userCategories.contains(category.getName())) {
+                        // Add to list of categories
+                        // only if user has paid for it
+                        newCategories.add(category);
+                        // And create recycler view adapter with the changes
+                        mCategoryRecyclerView.setAdapter(mAdapter);
+                    }
+
+
+
+                    Log.d(TAG, "showData: size of category " + newCategories.size());
+                    Log.d(TAG, "showData: size of children " + dataSnapshot.getChildrenCount());
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+    }
+
+    private void getUserCategories() {
+
+        Log.d(TAG, "This is in CategoryListFragment");
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+
+        myRef.child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    User u = new User();
+                    u.setUsername(ds.getValue(User.class).getUsername()); //set the name
+                    u.setLevel(ds.getValue(User.class).getLevel());
+                    u.setMoney(ds.getValue(User.class).getMoney());
+                    u.setBoughtCategories((ArrayList<String>) ds.child("boughtCategories").getValue());
+
+                    userCategories = u.getBoughtCategories();
+
+                    //display all the information
+                    Log.d(TAG, "showData: name: " + u.getUsername());
+                    Log.d(TAG, "showData: level: " + u.getLevel());
+                    Log.d(TAG, "showData: money: " + u.getMoney());
+                    Log.d(TAG, "showData: boughtCategories0 " + u.getBoughtCategories().get(0));
+
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
     }
 
 }

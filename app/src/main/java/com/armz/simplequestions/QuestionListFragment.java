@@ -67,7 +67,6 @@ public class QuestionListFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                int i = 0;
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
 
                     if (ds.getKey().equals(categoryName)) {
@@ -81,10 +80,10 @@ public class QuestionListFragment extends Fragment {
 
                             Question question = new Question();
                             question.setmID(ds2.getValue(Question.class).getmID()); //set the name
-                            question.setmQuestionDisplay(ds2.getValue(Question.class).getmQuestionDisplay() + " " + question.getmID());
-                            question.setmQuestion(ds2.getValue(Question.class).getmQuestion());
+                            question.setmQuestionDisplay("Problem " + question.getmID());
+                            question.setmQuestion(ds2.getKey());
                             question.setmAnswer(ds2.getValue(Question.class).getmAnswer());
-                            question.setMhasPassed(ds2.getValue(Question.class).getMhasPassed());
+//                            question.setMhasPassed(ds2.getValue(Question.class).getMhasPassed());
                             question.setmHint(ds2.getValue(Question.class).getmHint());
                             List<String> wrongAnswers = new ArrayList<String>();
                             question.setWrongAnswer1(ds2.getValue(Question.class).getWrongAnswer1());
@@ -113,11 +112,12 @@ public class QuestionListFragment extends Fragment {
 
                             Log.d(TAG, "showData: size of category " + questions.size());
                             Log.d(TAG, "showData: size of children " + dataSnapshot.getChildrenCount());
+
+                            QuestionLab.get(getContext()).setmQuestions(questions);
                         }
-                        i++;
                     }
                         }
-                
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -153,7 +153,7 @@ public class QuestionListFragment extends Fragment {
 
         public void bind(Question question){
             mQuestion = question;
-            mQuestionTextView.setText("Hello");
+            mQuestionTextView.setText("Problem " + question.getmID());
             //mSolvedImageView.setVisibility(mQuestion.getMhasPassed() ? View.VISIBLE : View.GONE);
         }
 

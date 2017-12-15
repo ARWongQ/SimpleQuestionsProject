@@ -35,6 +35,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -54,14 +64,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager mViewPager;
 
 
+    // Google sign-in variables and Firebase things
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
-
-    // [START declare_auth]
     private FirebaseAuth mAuth;
-    // [END declare_auth]
-
     private GoogleSignInClient mGoogleSignInClient;
+
+    // List of users pulled from Firebase
+    final List<User> users = new ArrayList<>();
+
+    Bundle bundle = new Bundle();
+
 
     //Making sure everything is set up
     @Override
@@ -84,19 +97,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+        // Look at onClick function for what clicking on these does
         findViewById(R.id.sign_in_button).setOnClickListener(this);
+        findViewById(R.id.sign_out_button).setOnClickListener(this);
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-        // [END config_signin]
+        setupGoogleSignIn();
 
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
-        // [END initialize_auth]
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
@@ -151,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            bundle.putString("username", user.getEmail());
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -171,9 +179,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+
+
     }
     // [END signin]
 
+    private void signOut() {
+        // Firebase sign out
+        mAuth.signOut();
+
+        // Google sign out
+        mGoogleSignInClient.signOut().addOnCompleteListener(this,
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        updateUI(null);
+                    }
+                });
+    }
 
 
     @Override
@@ -184,12 +207,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void updateUI(FirebaseUser user) {
-        if (user != null) {
+
+        if (user != null) { // means a user is signed in
             ((TextView)findViewById(R.id.username)).setText("Google User: " + user.getEmail());
+
+            getUsersInFirebase(); // sets the global users variable
+
+            User u = getUserFromLocalList(user);
+
+            if (u == null) { // this user was not in the database, which means it signed in for first time
+                User user1 = new User(user.getEmail(), 0, 0, 10, 0);
+                ArrayList<String> boughtCats = new ArrayList<>();
+                boughtCats.add("Computer Science");
+                user1.setBoughtCategories(boughtCats);
+                saveUserInFirebase(user1, user);
+                //users.add(user1);
+                addIfNotThere(user1);
+            }
+            ((TextView) findViewById(R.id.level_TextView)).setText("Level " + getUserFromLocalList(user).getLevel());
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
+            findViewById(R.id.sign_out_button).setVisibility(View.VISIBLE);
         } else {
+            ((TextView)findViewById(R.id.username)).setText("Google User: ");
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
+            findViewById(R.id.sign_out_button).setVisibility(View.GONE);
         }
+    }
+
+    private User getUserFromLocalList(FirebaseUser u) {
+
+        for (User local : users) {
+            Log.d(TAG, "username of user found: " + local.getUsername());
+            if (local.getUsername().equals(u.getEmail())) {
+                return local;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -212,6 +265,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int i = v.getId();
         if (i == R.id.sign_in_button) {
             signIn();
+        } else if (i == R.id.sign_out_button) {
+            signOut();
         }
     }
 
@@ -226,12 +281,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super(fm);
         }
 
+
+
+
         @Override
         public Fragment getItem(int position) {
             //Returns the desired fragment
             switch (position){
                 case 0:
                     CategoryListFragment tab1 = new CategoryListFragment();
+                    tab1.setArguments(bundle);
                     return tab1;
 
                 case 1:
@@ -258,6 +317,77 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return 4;
         }
 
+
+    }
+
+    private void setupGoogleSignIn() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+    }
+
+    private void getUsersInFirebase() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+
+        myRef.child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    User u = new User();
+                    Log.d(TAG, "What is this: " + ds.getValue().toString());
+                    u.setUsername(ds.getValue(User.class).getUsername()); //set the name
+                    u.setLevel(ds.getValue(User.class).getLevel());
+                    u.setMoney(ds.getValue(User.class).getMoney());
+                    u.setBoughtCategories((ArrayList<String>) ds.child("boughtCategories").getValue());
+
+
+                    //display all the information
+                    Log.d(TAG, "showData: name: " + u.getUsername());
+                    Log.d(TAG, "showData: level: " + u.getLevel());
+                    Log.d(TAG, "showData: money: " + u.getMoney());
+                    Log.d(TAG, "showData: boughtCategories0 " + u.getBoughtCategories().get(0));
+
+                    addIfNotThere(u);
+
+                    Log.d(TAG, "showData: size of users list " + users.size() + " Printing them: ");
+                    Log.d(TAG, "user 1: " + users.get(0).getUsername());
+//                    Log.d(TAG, "user 2: " + users.get(1).getUsername());
+
+
+                    Log.d(TAG, "showData: size of children " + dataSnapshot.getChildrenCount());
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+    }
+
+    private void addIfNotThere(User u1) {
+
+        boolean found = false;
+        for (User u2 : users) {
+            if (u2.getUsername().equals(u1.getUsername())) {
+                found = true;
+            }
+        }
+        if (found) return;
+        else users.add(u1);
+        }
+
+    private void saveUserInFirebase(User lu, FirebaseUser fu) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+        myRef.child("users").child(fu.getDisplayName()).setValue(lu);
+//        for (String s : lu.getBoughtCategories()) {
+//            myRef.child("users").child(fu.getDisplayName()).child("boughtCategories").child(s).setValue(1);
+//        }
 
     }
 }
